@@ -13,7 +13,8 @@ public class Main {
         node2.next.next = new NumberNode(7);
         node2.next.next.next = new NumberNode(8);
 //        NumberNode res = NumberNodeUtils.reverseNode(node1);
-        NumberNode res = NumberNodeUtils.mergeSortedNode(node1,node2);
+//        NumberNode res = NumberNodeUtils.mergeSortedNode(node1,node2);
+        NumberNode res = NumberNodeUtils.deleteBack(node1,2);
         while (res != null){
             System.err.println(res.val);
             res = res.next;
