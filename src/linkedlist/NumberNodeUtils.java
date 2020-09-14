@@ -82,4 +82,45 @@ public class NumberNodeUtils {
         tempNode.next = tempNode.next.next;
         return node;
     }
+
+    /**
+     * 检测链表是否回环（快慢指针法）
+     * @param node
+     * @return
+     */
+    public static boolean isLoopback(NumberNode node){
+        if (node == null) {
+            return false;
+        }
+        NumberNode fast = node;
+        NumberNode slow = node;
+        //快指针每次走两步，慢指针每次走一步，如果相遇则说明链表回环
+        while (fast.next != null && fast.next.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 求链表的中间节点
+     * @param node
+     * @return
+     */
+    public static NumberNode getMiddle(NumberNode node){
+        if (node == null){
+            return node;
+        }
+        NumberNode fast = node;
+        NumberNode slow = node;
+        //快指针每次走两步，慢指针每次走一步，快指针走到末尾，慢指针即走到中间
+        while (fast.next != null && fast.next.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
 }
