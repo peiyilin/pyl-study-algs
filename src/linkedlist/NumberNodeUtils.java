@@ -63,24 +63,25 @@ public class NumberNodeUtils {
         }
         //链表总节点个数
         int countTotal = 0;
-        //临时节点
-        NumberNode tempNode = node;
-        while (tempNode != null){
+        //哨兵节点
+        NumberNode tempNode = new NumberNode(0);
+        tempNode.next = node;
+        while (node != null){
             countTotal++;
-            tempNode = tempNode.next;
+            node = node.next;
         }
         if (countBack>countTotal){
-            return node;
+            return tempNode.next;
         }
-        tempNode = node;
+        node = tempNode;
         //找到被删除节点的前一个节点
-        int k = countTotal-countBack-1;
+        int k = countTotal-countBack;
         while (k > 0){
             k--;
-            tempNode = tempNode.next;
+            node = node.next;
         }
-        tempNode.next = tempNode.next.next;
-        return node;
+        node.next = node.next.next;
+        return tempNode.next;
     }
 
     /**
