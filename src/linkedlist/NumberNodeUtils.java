@@ -13,7 +13,7 @@ public class NumberNodeUtils {
      * @return
      */
     public static NumberNode reverseNode(NumberNode node){
-        if (node == null || node.next == null) {
+        if (node == null || node.next == null){
             return node;
         }
         NumberNode res = null;
@@ -49,6 +49,41 @@ public class NumberNodeUtils {
             res.next = mergeSortedNode(node1.next,node2);
         }
         return res;
+    }
+
+    /**
+     * 合并两个有序链表（非递归）
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public static NumberNode mergeSortedNode1(NumberNode node1,NumberNode node2){
+        if (node1 == null){
+            return node2;
+        }
+        if (node2 == null){
+            return node1;
+        }
+        NumberNode temp = new NumberNode(-1);
+        NumberNode res = temp;
+
+        while (node1 != null && node2 != null){
+            if (node1.val < node2.val){
+                temp.next = node1;
+                node1 = node1.next;
+            }else {
+                temp.next = node2;
+                node2 = node2.next;
+            }
+            temp = temp.next;
+        }
+        if (node1 == null){
+            temp.next = node2;
+        }
+        if (node2 == null){
+            temp.next = node1;
+        }
+        return res.next;
     }
 
     /**
