@@ -147,7 +147,7 @@ public class NumberNodeUtils {
      * @return
      */
     public static NumberNode getMiddle(NumberNode node){
-        if (node == null){
+        if (node == null || node.next == null){
             return node;
         }
         NumberNode fast = node;
