@@ -19,7 +19,7 @@ public class BinarySearch {
         while (low <= high){
             int mid = low + ((high-low) >> 1);
             if (sortedArray[mid] == target){
-                return -1;
+                return mid;
             }else if (sortedArray[mid] < target){
                 low = mid + 1;
             }else {
