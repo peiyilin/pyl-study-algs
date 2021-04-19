@@ -91,4 +91,29 @@ public class SortedUtil {
             }
         }
     }
+
+    public static void quickSort(int[] a,int start,int end){
+        if (start>= end){
+            return;
+        }
+        int position = partition(a,start,end);
+        quickSort(a,start,position-1);
+        quickSort(a,position+1,end);
+    }
+
+    private static int partition(int[] a, int start, int end) {
+        int pivot = a[end];
+        int left = start;
+        for (int i=start;i<end;i++){
+            if (a[i] < pivot){
+                int temp = a[left];
+                a[left++] = a[i];
+                a[i] = temp;
+            }
+        }
+        int temp = a[left];
+        a[left] = pivot;
+        a[end] = temp;
+        return left;
+    }
 }
