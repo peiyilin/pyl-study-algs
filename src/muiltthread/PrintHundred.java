@@ -9,23 +9,39 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PrintHundred {
 
     public static void main(String[] args) {
-        Resource resource = new Resource();
+        /*Resource resource = new Resource();
         List<Runnable> runList = new ArrayList<>();
         resource.maxVal=100;
         runList.add(() -> {
             resource.printNnm(resource.firstCondition, resource.secondCondition);
         });
         runList.add(() -> {
-            resource.printNnm(resource.secondCondition, resource.thridCondition);
+            resource.printNnm(resource.secondCondition, resource.thirdCondition);
         });
         runList.add(() -> {
-            resource.printNnm(resource.thridCondition, resource.fourthCondition);
+            resource.printNnm(resource.thirdCondition, resource.fourthCondition);
         });
         runList.add(() -> {
             resource.printNnm(resource.fourthCondition, resource.firstCondition);
         });
         for (int i = 1; i <= runList.size(); i++) {
             new Thread(runList.get(i - 1), "" + i).start();
+        }*/
+
+        ABCPrint abcPrint = new ABCPrint();
+        List<Runnable> runList = new ArrayList<>();
+        runList.add(() -> {
+            abcPrint.printABC(abcPrint.firstCondition,abcPrint.secondCondition);
+        });
+        runList.add(() -> {
+            abcPrint.printABC(abcPrint.secondCondition,abcPrint.thirdCondition);
+        });
+        runList.add(() -> {
+            abcPrint.printABC(abcPrint.thirdCondition,abcPrint.firstCondition);
+        });
+
+        for (int i = 1; i <= runList.size(); i++) {
+            new Thread(runList.get(i - 1)).start();
         }
     }
 
@@ -37,7 +53,7 @@ public class PrintHundred {
         Lock lock = new ReentrantLock();
         Condition firstCondition = lock.newCondition();
         Condition secondCondition = lock.newCondition();
-        Condition thridCondition = lock.newCondition();
+        Condition thirdCondition = lock.newCondition();
         Condition fourthCondition = lock.newCondition();
 
         public void printNnm(Condition self, Condition next) {
@@ -55,6 +71,34 @@ public class PrintHundred {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+     static class ABCPrint{
+        String[] abc = new String[]{"A","B","C"};
+        int num = 0;
+        int count = 5*abc.length;
+        Lock lock = new ReentrantLock();
+        Condition firstCondition = lock.newCondition();
+        Condition secondCondition = lock.newCondition();
+        Condition thirdCondition = lock.newCondition();
+
+        void printABC(Condition self,Condition next) {
+            lock.lock();
+            try {
+                while (count>0){
+                    System.err.println(abc[num%abc.length]);
+                    num++;
+                    count--;
+                    next.signal();
+                    self.await();
+                }
+                next.signal();
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
                 lock.unlock();
             }
         }
